@@ -17,27 +17,29 @@
 
 
 ### Create salary_log table
+
 ![image](https://github.com/ganeshshanmugavel27/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/122046208/04b9f8a5-5b5f-4c9c-adb6-aef7932722ee)
 
 
 
 ### PLSQL Trigger code
-set serveroutput on
-SQL> CREATE OR REPLACE PROCEDURE emplo_data AS
-  2  BEGIN
-  3  INSERT INTO emplo(empid,empname,dept,salary)
-  4  values(1,'ganesh','IT',10000);
-  5  INSERT INTO emplo(empid,empname,dept,salary)
-  6  values(2,'sathish','doctor',100001);
-  7  INSERT INTO emplo(empid,empname,dept,salary)
-  8  values(3,'karthi','manager',200000);
-  9  COMMIT;
- 10  FOR emplo_rec IN (SELECT * FROM emplo)LOOP
- 11  DBMS_OUTPUT.PUT_LINE('EMPLOYEE ID:'||emp_rec.empid||',EMPLOYEE NAME:'|| emp_rec.empname||',DEPARTMENT:'||emp_rec.dept||',SALARY:'||emp_rec.salary);
- 12  END LOOP;
- 13  END;
- 14  /
- 
+```set serveroutput on
+create or replace trigger log_salary7_update
+before update on emp7
+for each row
+declare
+v_old_salary number;
+v_new_salary number;
+begin
+v_old_salary := :OLD.salary;
+v_new_salary := :NEW.salary;
+if v_old_salary <> v_new_salary then
+insert into sala_log1(empid, empname, old_salary, new_salary, update_date)
+values(:OLD.empid, : OLD.empname, v_old_salary, v_new_salary, SYSDATE);
+end if;
+end;
+/
+```
 ### Output:
 ![image](https://github.com/ganeshshanmugavel27/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/122046208/b70dc2b9-dcc7-477e-8929-c00f0d63e29e)
 

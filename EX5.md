@@ -12,80 +12,35 @@
 7. Whenever a salary is updated for the employee it must be logged into the salary_log table with old salary and new salary.
 8. Display the employee table, salary_log table.
 
-### Program:
-```
-CREATE TABLE employed(
-  empid NUMBER,
-  empname VARCHAR2(10),
-  dept VARCHAR2(10),
-  salary NUMBER
-);
-
-CREATE TABLE sal_log (
-  log_id NUMBER GENERATED ALWAYS AS IDENTITY,
-  empid NUMBER,
-  empname VARCHAR2(10),
-  old_salary NUMBER,
-  new_salary NUMBER,
-  update_date DATE
-);
--- Insert the values in the employee table
-insert into employedd values(1,'Shakthi','IT',1000000);
-insert into employedd values(2,'Suji','SALES',500000)
-```
-
 ### Create employee table
-```CREATE TABLE employed(
-  empid NUMBER,
-  empname VARCHAR2(10),
-  dept VARCHAR2(10),
-  salary NUMBER
-);
-```
+![image](https://github.com/ganeshshanmugavel27/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/122046208/8a541cda-2cec-4981-a3a7-c4e0dbf627fc)
+
 
 ### Create salary_log table
-```
-CREATE TABLE sal_log (
-  log_id NUMBER GENERATED ALWAYS AS IDENTITY,
-  empid NUMBER,
-  empname VARCHAR2(10),
-  old_salary NUMBER,
-  new_salary NUMBER,
-  update_date DATE
-);
-```
+![image](https://github.com/ganeshshanmugavel27/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/122046208/04b9f8a5-5b5f-4c9c-adb6-aef7932722ee)
+
 
 
 ### PLSQL Trigger code
-```
--- Create the trigger
-CREATE OR REPLACE TRIGGER log_sal_update
-BEFORE UPDATE ON employed
-FOR EACH ROW
-BEGIN
-  IF :OLD.salary != :NEW.salary THEN
-    INSERT INTO sal_log (empid, empname, old_salary, new_salary, update_date)
-    VALUES (:OLD.empid, :OLD.empname, :OLD.salary, :NEW.salary, SYSDATE);
-  END IF;
-END;
-/
--- Insert the values in the employee table
-insert into employed values(1,'Shakthi','IT',1000000);
-insert into employed values(2,'Suji','SALES',500000);
-
--- Update the salary of an employee
-UPDATE employedd
-SET salary = 60000
-WHERE empid = 1;
--- Display the employee table
-SELECT * FROM employedd;
-
--- Display the salary_logg table
-SELECT * FROM sal_logg;
-```
-
+set serveroutput on
+SQL> CREATE OR REPLACE PROCEDURE emplo_data AS
+  2  BEGIN
+  3  INSERT INTO emplo(empid,empname,dept,salary)
+  4  values(1,'ganesh','IT',10000);
+  5  INSERT INTO emplo(empid,empname,dept,salary)
+  6  values(2,'sathish','doctor',100001);
+  7  INSERT INTO emplo(empid,empname,dept,salary)
+  8  values(3,'karthi','manager',200000);
+  9  COMMIT;
+ 10  FOR emplo_rec IN (SELECT * FROM emplo)LOOP
+ 11  DBMS_OUTPUT.PUT_LINE('EMPLOYEE ID:'||emp_rec.empid||',EMPLOYEE NAME:'|| emp_rec.empname||',DEPARTMENT:'||emp_rec.dept||',SALARY:'||emp_rec.salary);
+ 12  END LOOP;
+ 13  END;
+ 14  /
+ 
 ### Output:
-![Creating triggers](https://github.com/Jeevapriya14/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/121003043/6caf3238-451b-44b6-bf6c-a901cd1311b3)
+![image](https://github.com/ganeshshanmugavel27/Ex-No-5-Creating-Triggers-using-PL-SQL/assets/122046208/b70dc2b9-dcc7-477e-8929-c00f0d63e29e)
+
 
 
 ### Result:
